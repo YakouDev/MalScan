@@ -1,0 +1,8 @@
+malscan
+malscan.exe
+*.exe
+dist/
+.malscan/
+target/
+__pycache__/
+*.pyc

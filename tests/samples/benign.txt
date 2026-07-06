@@ -1,0 +1,2 @@
+Hello, this is a benign test file for MalScan unit tests.
+No suspicious content here.
