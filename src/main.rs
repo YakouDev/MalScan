@@ -1,7 +1,7 @@
 mod banner;
 mod cli;
 mod extractor;
-mod fireworks;
+mod openrouter;
 mod heuristics;
 mod htaccess;
 mod key;

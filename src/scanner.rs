@@ -1,5 +1,5 @@
 use crate::extractor::Extractor;
-use crate::fireworks::FireworksClient;
+use crate::openrouter::OpenRouterClient;
 use crate::heuristics::Scorer;
 use crate::htaccess;
 use crate::model::{AIMode, ScanResult};
@@ -21,7 +21,7 @@ pub struct Scanner {
     pub extra_extensions: Vec<String>,
     pub extractor: Extractor,
     pub scorer: Scorer,
-    pub ai_client: FireworksClient,
+    pub ai_client: OpenRouterClient,
     pub policy: Policy,
 }
 
@@ -45,7 +45,7 @@ impl Scanner {
             extra_extensions: extra_exts.clone(),
             extractor: Extractor::new(max_bytes),
             scorer: Scorer::new(threshold, ai_mode),
-            ai_client: FireworksClient::new(api_key),
+            ai_client: OpenRouterClient::new(api_key),
             policy: Policy::new(&[]).with_extra_extensions(&extra_exts),
         }
     }

@@ -4,8 +4,8 @@ use reqwest::blocking::Client;
 use std::thread;
 use std::time::Duration;
 
-const BASE_URL: &str = "https://token-plan-sgp.xiaomimimo.com/v1";
-const MODEL: &str = "mimo-v2.5";
+const BASE_URL: &str = "https://openrouter.ai/api/v1";
+const MODEL: &str = "deepseek/deepseek-chat-v3-0324";
 const MAX_RETRIES: u32 = 5;
 
 const SYSTEM_PROMPT: &str = r#"You are an expert web application security analyst specializing in PHP webshell detection.
@@ -29,12 +29,12 @@ Guidelines:
 - Pay special attention to: obf_eval_chain, preg_replace /e modifier, extract($_POST/GET), create_function callbacks
 "#;
 
-pub struct FireworksClient {
+pub struct OpenRouterClient {
     api_key: String,
     http: Client,
 }
 
-impl FireworksClient {
+impl OpenRouterClient {
     pub fn new(api_key: String) -> Self {
         Self {
             api_key,
@@ -51,7 +51,7 @@ impl FireworksClient {
 
     pub fn analyze(&self, features: &FileFeatures) -> AIVerdict {
         if !self.configured() {
-            return error_verdict("FIREWORKS_API_KEY not configured");
+            return error_verdict("OPENROUTER_API_KEY not configured");
         }
 
         let summary = features.summary_dict(40, 15);
@@ -68,12 +68,7 @@ impl FireworksClient {
             ],
             "max_tokens": 4096,
             "temperature": 0.1,
-            "top_k": 40,
-            "presence_penalty": 0,
-            "frequency_penalty": 0,
-            "reasoning_effort": "low",
             "response_format": {"type": "json_object"},
-            "thinking": {"type": "disabled"},
         });
 
         let url = format!("{BASE_URL}/chat/completions");
@@ -84,6 +79,8 @@ impl FireworksClient {
                 .header("Accept", "application/json")
                 .header("Content-Type", "application/json")
                 .header("Authorization", format!("Bearer {}", self.api_key))
+                .header("HTTP-Referer", "https://github.com/YakouDev/MalScan")
+                .header("X-Title", "MalScan")
                 .json(&body)
                 .send()
             {

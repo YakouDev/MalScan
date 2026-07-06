@@ -1,6 +1,6 @@
 # MalScan — Webshell Scanner
 
-Webshell-focused static scanner untuk PHP backdoor + deteksi bypass ekstensi via `.htaccess` (AddHandler PHP → `.js`, FilesMatch, `<Files>` whitelist). Verdict AI opsional via Fireworks `deepseek-v4-flash`.
+Webshell-focused static scanner untuk PHP backdoor + deteksi bypass ekstensi via `.htaccess` (AddHandler PHP → `.js`, FilesMatch, `<Files>` whitelist). Verdict AI opsional via OpenRouter.
 
 ## Fitur
 
@@ -9,7 +9,7 @@ Webshell-focused static scanner untuk PHP backdoor + deteksi bypass ekstensi via
 - **Parse `.htaccess`**: ekstrak `AddHandler` (PHP/SSI → ekstensi custom), `FilesMatch`, `<Files>` whitelist
 - **Disguised webshell**: scan `.js`/ekstensi lain jika di-map ke PHP handler di htaccess
 - **PHP signature engine**: eval+superglobal, obfuscation chain, known markers (WSO, China Chopper, c99, dll)
-- AI verdict JSON via Fireworks (mode auto/always/off)
+- AI verdict JSON via OpenRouter (mode auto/always/off)
 - Single static binary
 
 ## Build
@@ -86,7 +86,7 @@ File non-webshell (`.txt`, `.exe`, PowerShell, dll) **di-skip** kecuali mengandu
 Wajib via env var atau flag `--api-key`:
 
 ```powershell
-$env:FIREWORKS_API_KEY = "your-key-here"
+$env:OPENROUTER_API_KEY = "your-key-here"
 malscan scan ./site --ai-mode auto
 
 # atau
@@ -102,7 +102,7 @@ cargo test
 ## Keamanan
 
 - Scanner **tidak mengeksekusi** file target
-- Feature summary dikirim ke Fireworks saat AI mode aktif
+- Feature summary dikirim ke OpenRouter saat AI mode aktif
 - Jangan commit API key ke repo; gunakan env var
 
 ## Lisensi
